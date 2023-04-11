@@ -1,0 +1,26 @@
+/**
+ * Cette methode retourne une representation sous forme d'une chaine de caracteres de cet
+ * objet perdu. 
+ * 
+ * ANTECEDENTS : 
+ *   - la categorie de cet objet perdu est valide (entre 0 et CATEGORIES.length - 1)
+ *   - le tableau motsCles n'est pas null.
+ * 
+ * @return une representation sous forme d'une chaine de caracteres de cet objet perdu.
+ */
+public String toString() {
+   String listeMotsCles = "";
+   String desc = "ID           : " + id + "\n" + "MOTS CLES    : ";
+
+   for (String motCle : motsCles) {
+      listeMotsCles = listeMotsCles + motCle + ", ";
+   }
+
+   desc = desc + (!listeMotsCles.isEmpty() 
+      ? listeMotsCles.substring(0, listeMotsCles.length() - 2) : listeMotsCles);
+   desc = desc + "\n";
+   desc = desc + "CATEGORIE    : " + CATEGORIES[categorie] + "\n" 
+               + "DATE         : " + date + "\n"
+               + "LOCALISATION : " + localisation; 
+   return desc;
+}
