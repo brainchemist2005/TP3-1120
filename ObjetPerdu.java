@@ -6,11 +6,11 @@ public class ObjetPerdu {
 	
 	static int sequenceId; 
 	
-	int id, categorie;
+	int id, categorie, nbrElem=0;
 	
 	Date date;
 	
-	String localisation;
+	String localisation, valeurNonSign = "-1";
 	
 	String[] motsCles;
 	
@@ -21,8 +21,36 @@ public class ObjetPerdu {
 		this.localisation = localisation;
 		this.id = sequenceId;
 		sequenceId++;
-		motsCles = new String[0];
+		motsCles = new String[nbrElem];
 	}
+	
+	public static String[] agrandirTableau(String[] tab,
+		 int nbrCasesDePlus) {
+		 //creer un nouveau tableau plus grand
+		 String [] tab2 = new String [tab.length + nbrCasesDePlus];
+
+		 //copier les éléments de tab dans tab2
+		 for (int i = 0 ; i < tab.length ; i++) {
+		 tab2[i] = tab[i];
+		 }
+		 return tab2;
+	 }
+	
+	
+	public static String[] diminuerTableau(String[] tab,
+			 int nbrCasesDeMoins) {
+			 //creer un nouveau tableau plus grand
+			 String [] tab2 = new String [tab.length - nbrCasesDeMoins];
+
+			 //copier les éléments de tab dans tab2
+			 for (int i = 0, j = 0 ; i < tab.length ; j++,i++) {
+				 if(tab[i].equals("$"))
+				 	i++;
+				 
+				 tab2[j] = tab[i];
+			 }
+			 return tab2;
+		 }
 	
 	
 	public int getId() {
@@ -51,6 +79,70 @@ public class ObjetPerdu {
 	
 	public void setLocalisation(String localisation) {
 		this.localisation = localisation;
+	}
+	
+	
+	public String obtenirMotsCles() {
+		String motsCle = "";
+		
+		if(motsCles.length != 0) {
+			for(int i=0 ; i<motsCles.length ; i++) {
+				motsCle += motsCles[i] + " " ;
+			}
+		}	
+		
+		return motsCle;
+	}
+	
+	public Boolean ajouterMotCle(String motCle) {
+		Boolean flag = true;
+		
+		if(motCle != null && motCle != "") {
+			for(int i=0 ; i<motsCles.length-1 ; i++) {
+				if(motCle.equalsIgnoreCase(motsCles[i])) {
+					flag = false;
+				}
+			}
+			
+			if(flag) {
+				motsCles = agrandirTableau(motsCles,1);
+				nbrElem++;
+			}
+		}
+		else 
+			flag = false;
+			
+		return flag;
+	}
+	
+	public boolean estAssocieACeMotCle(String motCle) {
+		
+		int i=0; 
+		boolean flag= false;
+		
+		
+		do  {
+			if(motCle.equalsIgnoreCase(motsCles[i]))
+				flag = true;
+			i++;
+		}
+		while(i < motsCles.length -1 || flag);
+		
+		return flag;
+	}
+	
+	public boolean supprimerMotCle(String motCle) {
+		
+		for(int i = 0; i < motsCles.length ; i++) {
+			if(motCle.equalsIgnoreCase(motsCles[i])) {
+				motsCles[i] = "$"; 
+				motsCles = diminuerTableau(motsCles,1);
+				nbrElem--;
+				return true;
+			}
+		}
+		
+		return false;
 	}
 	
 	
