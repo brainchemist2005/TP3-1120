@@ -173,4 +173,10 @@ public class ObjetPerdu {
 	               + "LOCALISATION : " + localisation; 
 	   return desc;
 	}
+	
+	
+	public int getSequenceId() {
+		return sequenceId;
+	}
+	
 }
