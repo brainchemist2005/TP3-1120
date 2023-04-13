@@ -1,9 +1,37 @@
 
 public class GestionObjetsPerdus {
-	final static String ERREUR_MENU = "ERREUR, vous devez entrer un choix entre 1 et 7! RECOMMENCEZ...";
+	final static String ERREUR_MENU = "ERREUR, vous devez entrer un choix entre 1 et 7! RECOMMENCEZ...",ERR_POSITIF = "ERREUR, entrez un entier strictement positif! RECOMMENCEZ..." ;
 	
-	public static void consignerObjet() {
-		String choix,type;
+	public static boolean validationDate(int jour, int mois, int annee) {
+		boolean flag = true;
+		
+		if(annee > 2023)
+			flag = false;
+		
+		else if(mois > 12)
+			flag = false;
+		
+		else if(mois < 8 && mois % 2 != 0) {
+			if(jour > 31)
+				flag = false;
+			else if(mois == 2 && jour > 29)
+				flag = false;
+		}
+		
+		else if(mois > 7 && mois % 2 == 0) {
+			if(jour > 31)
+				flag = false;
+		}
+		
+		
+				
+		return flag;
+	}
+	
+	public static void consignerObjet(Date date) {
+		String choix, type;
+		boolean flag;
+		int jour = 0, mois, annee;
 		
 		do {
 		
@@ -45,11 +73,43 @@ public class GestionObjetsPerdus {
                 default:
                     System.out.println(ERREUR_MENU);
             }
-		
+		 
+                       
 		}while(choix.equals("1") || choix.equals("2") || choix.equals("3") || choix.equals("4") || choix.equals("5"));
 		
-		System.out.println("Date de consignation : ");
+		do {
+			do {
+				
+				System.out.println("Date de consignation : ");
+				jour = TP3Utils.validerTypeEntierStrictPositif(Clavier.lireString(),ERR_POSITIF);
+				
+			}while(jour != 0);
+			
+			do {
+				
+				System.out.println("Entrez le mois de la date : ");
+				mois = TP3Utils.validerTypeEntierStrictPositif(Clavier.lireString(),ERR_POSITIF);
+				
+			}while(mois != 0);
+			
+			do {
+				
+				System.out.println("Entrez l'annee de la date : ");
+				annee = TP3Utils.validerTypeEntierStrictPositif(Clavier.lireString(),ERR_POSITIF);
+				
+			}while(mois != 0);
+			
+			date.setJour(jour);
+			date.setMois(mois);
+			date.setAnnee(annee);
+			
+			flag = date.estDateValide();
+			
+			if(!flag)
+				System.out.println("ERREUR, date invalide! RECOMMENCEZ...");
 		
+			
+		}while(flag);
 	}
 	
 	public static void menu() {
@@ -71,6 +131,7 @@ public class GestionObjetsPerdus {
 	}
 	
 	public static void main(String[] args) {
+		Date date = new Date();
         String choix;
         ObjetPerdu[] objetsPerdus = TP3Utils.recupererDonnees();
 
@@ -82,9 +143,9 @@ public class GestionObjetsPerdus {
 
             switch (choix) {
                 case "1":
-                	consignerObjet();
+                	consignerObjet(date);
                     break;
-
+                    
                 case "2":
                     
                     break;
