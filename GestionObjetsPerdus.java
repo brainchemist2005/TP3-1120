@@ -1,6 +1,6 @@
 
 public class GestionObjetsPerdus {
-	final static String ERREUR_MENU = "ERREUR, vous devez entrer un choix entre 1 et 7! RECOMMENCEZ...",ERR_POSITIF = "ERREUR, entrez un entier strictement positif! RECOMMENCEZ..." ;
+	final static String ERREUR_MENU = "ERREUR, vous devez entrer un choix entre 1 et 7! RECOMMENCEZ...",ERR_POSITIF = "ERREUR, entrez un entier strictement positif! RECOMMENCEZ...", MSG_SOL_MOTS_CLE = "Entrez les mots-cles decrivant l'objet a consigner : " , MSG_ERR_MOTS_CLE = "ERREUR, la chaine doit contenir entre 2 et 50 caracteres! RECOMMENCEZ...", MSG_ERR_MOTS_LOCALISATION = "ERREUR, la chaine doit contenir entre 5 et 50 caracteres! RECOMMENCEZ...";;
 	
 	public static boolean validationDate(int jour, int mois, int annee) {
 		boolean flag = true;
@@ -23,13 +23,15 @@ public class GestionObjetsPerdus {
 				flag = false;
 		}
 		
-		
 				
 		return flag;
 	}
 	
-	public static void consignerObjet(Date date) {
-		String choix, type;
+	public static void consignerObjet(Date date, ObjetPerdu[] objetsPerdus) {
+		ObjetPerdu objet;
+		String choix, motsCle, localisation;
+		int categorie = 0;
+		String motsCles[]; 
 		boolean flag;
 		int jour = 0, mois, annee;
 		
@@ -51,23 +53,23 @@ public class GestionObjetsPerdus {
 
             switch (choix) {
                 case "1":
-                	type = "bijou" ;
+                	categorie = 0 ;
                     break;
 
                 case "2":
-                    type = "vetement";
+                	categorie = 1;
                     break;
 
                 case "3":
-                	type = "argent / portefeuille";
+                	categorie = 2;
                     break;
 
                 case "4":
-                	type = "cle(s)";
+                	categorie = 3;
                     break;
                     
                 case "5":
-                	type = "autre";
+                	categorie = 4;
                     break;
                     
                 default:
@@ -110,7 +112,30 @@ public class GestionObjetsPerdus {
 		
 			
 		}while(flag);
+	
+		motsCle = TP3Utils.validerLngChaine(MSG_SOL_MOTS_CLE,MSG_ERR_MOTS_CLE,2,50);
+		motsCles = motsCle.split("\\s+") ; 
+		
+		
+		System.out.println("Entrez la localisation de l'objet perdu consigne : \r\n");
+		localisation = TP3Utils.validerLngChaine(MSG_SOL_MOTS_CLE,MSG_ERR_MOTS_CLE,5,50);
+		
+		objet = new ObjetPerdu(categorie,date,localisation);
+		
+		if(objetsPerdus[objetsPerdus.length - 1] != null)
+			objetsPerdus = ObjetPerdu.agrandirTableau(objetsPerdus,4);
+		
+		else {
+			objetsPerdus[ObjetPerdu.sequenceId] = objet;
+			objetsPerdus[ObjetPerdu.sequenceId].motsCles = ObjetPerdu.agrandirTableau(objetsPerdus[ObjetPerdu.sequenceId].motsCles,motsCles.length); 
+			for(int i=0 ; i<motsCles.length ; i++)
+				objetsPerdus[ObjetPerdu.sequenceId].ajouterMotCle(motsCles[i]); //Msg d erreur ?
+			
+		}
+		
+
 	}
+	
 	
 	public static void menu() {
 		System.out.println("=========================\r\n"
@@ -143,7 +168,7 @@ public class GestionObjetsPerdus {
 
             switch (choix) {
                 case "1":
-                	consignerObjet(date);
+                	consignerObjet(date,objetsPerdus);
                     break;
                     
                 case "2":

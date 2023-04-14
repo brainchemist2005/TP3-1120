@@ -8,7 +8,7 @@ public class ObjetPerdu {
 	
 	int id, categorie, nbrElem=0;
 	
-	Date date;
+	Date date = new Date();
 	
 	String localisation, valeurNonSign = "-1";
 	
@@ -24,8 +24,7 @@ public class ObjetPerdu {
 		motsCles = new String[nbrElem];
 	}
 	
-	public static String[] agrandirTableau(String[] tab,
-		 int nbrCasesDePlus) {
+	public static String[] agrandirTableau(String[] tab, int nbrCasesDePlus) {
 		 //creer un nouveau tableau plus grand
 		 String [] tab2 = new String [tab.length + nbrCasesDePlus];
 
@@ -36,11 +35,35 @@ public class ObjetPerdu {
 		 return tab2;
 	 }
 	
+	public static ObjetPerdu[] agrandirTableau(ObjetPerdu[] tab, int nbrCasesDePlus) {
+		 //creer un nouveau tableau plus grand
+		ObjetPerdu [] tab2 = new ObjetPerdu [tab.length + nbrCasesDePlus];
+
+		 //copier les éléments de tab dans tab2
+		 for (int i = 0 ; i < tab.length ; i++) {
+		 tab2[i] = tab[i];
+		 }
+		 return tab2;
+	 }
 	
-	public static String[] diminuerTableau(String[] tab,
-			 int nbrCasesDeMoins) {
+	
+	public static String[] diminuerTableau(String[] tab, int nbrCasesDeMoins) {
 			 //creer un nouveau tableau plus grand
 			 String [] tab2 = new String [tab.length - nbrCasesDeMoins];
+
+			 //copier les éléments de tab dans tab2
+			 for (int i = 0, j = 0 ; i < tab.length ; j++,i++) {
+				 if(tab[i].equals("$"))
+				 	i++;
+				 
+				 tab2[j] = tab[i];
+			 }
+			 return tab2;
+		 }
+	
+	public static ObjetPerdu[] diminuerTableau(ObjetPerdu[] tab, int nbrCasesDeMoins) {
+			 //creer un nouveau tableau plus grand
+		ObjetPerdu [] tab2 = new ObjetPerdu [tab.length - nbrCasesDeMoins];
 
 			 //copier les éléments de tab dans tab2
 			 for (int i = 0, j = 0 ; i < tab.length ; j++,i++) {
