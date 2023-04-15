@@ -1,10 +1,10 @@
 
 public class ObjetPerdu {
 	
-	final int CAT_BIJOU = 0, CAT_VETEMENT = 1, CAT_ARGENT_PORTEFEUILLE = 2,CAT_CLE  = 3, CAT_AUTRE = 4; 
-	final String[] CATEGORIES = {"bijou", "vetement", "argent / portefeuille", "cle(s)", "autre"} ;
+	final static int CAT_BIJOU = 0, CAT_VETEMENT = 1, CAT_ARGENT_PORTEFEUILLE = 2,CAT_CLE  = 3, CAT_AUTRE = 4; 
+	final static String[] CATEGORIES = {"bijou", "vetement", "argent / portefeuille", "cle(s)", "autre"} ;
 	
-	static int sequenceId; 
+	static int sequenceId = -1; 
 	
 	int id, categorie, nbrElem=0;
 	
@@ -15,12 +15,11 @@ public class ObjetPerdu {
 	String[] motsCles;
 	
 	public ObjetPerdu(int categorie, Date date, String localisation){
-		
 		this.categorie = categorie; //check categorie doit etre entre 0 et length-1
 		this.date = date;
 		this.localisation = localisation;
-		this.id = sequenceId;
 		sequenceId++;
+		this.id = sequenceId;
 		motsCles = new String[nbrElem];
 	}
 	
@@ -110,9 +109,13 @@ public class ObjetPerdu {
 		
 		if(motsCles.length != 0) {
 			for(int i=0 ; i<motsCles.length ; i++) {
-				motsCle += motsCles[i] + " " ;
+				if(motsCles[i] != null) {
+						motsCle += motsCles[i] + " " ;
+				}
 			}
+			motsCle = motsCle.substring(0, motsCle.length() - 1);
 		}	
+		
 		
 		return motsCle;
 	}
@@ -129,6 +132,7 @@ public class ObjetPerdu {
 			
 			if(flag) {
 				motsCles = agrandirTableau(motsCles,1);
+				motsCles[motsCles.length - 1] = motCle;
 				nbrElem++;
 			}
 		}

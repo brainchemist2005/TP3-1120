@@ -1,30 +1,59 @@
 
 public class GestionObjetsPerdus {
-	final static String ERREUR_MENU = "ERREUR, vous devez entrer un choix entre 1 et 7! RECOMMENCEZ...",ERR_POSITIF = "ERREUR, entrez un entier strictement positif! RECOMMENCEZ...", MSG_SOL_MOTS_CLE = "Entrez les mots-cles decrivant l'objet a consigner : " , MSG_ERR_MOTS_CLE = "ERREUR, la chaine doit contenir entre 2 et 50 caracteres! RECOMMENCEZ...", MSG_ERR_MOTS_LOCALISATION = "ERREUR, la chaine doit contenir entre 5 et 50 caracteres! RECOMMENCEZ...";;
+	final static String ERREUR_MENU = "ERREUR, vous devez entrer un choix entre 1 et 7! RECOMMENCEZ..." ,ERR_POSITIF = "ERREUR, entrez un entier strictement positif! RECOMMENCEZ...", MSG_SOL_MOTS_CLE = "Entrez les mots-cles decrivant l'objet a consigner : " , MSG_ERR_MOTS_CLE = "ERREUR, la chaine doit contenir entre 2 et 50 caracteres! RECOMMENCEZ...", MSG_ERR_MOTS_LOCALISATION = "ERREUR, la chaine doit contenir entre 5 et 50 caracteres! RECOMMENCEZ...", ERREUR_MENU_CATEGORIE = "ERREUR, vous devez entrer un choix entre 1 et 5! RECOMMENCEZ...", MSG_TROUVER = "Voulez-vous vraiment rendre cet objet perdu (oui / non) : ", ERR_REP = "ERREUR, vous devez entrer OUI ou NON! RECOMMENCEZ..." ,MSG_PAS_TROUVER = "** L'OBJET PERDU AYANT CET ID N'EST PAS CONSIGNE **";
 	
-	public static boolean validationDate(int jour, int mois, int annee) {
-		boolean flag = true;
+	public void reclamation(ObjetPerdu[] objetsPerdus) {
+		int id, i=0;
+		String rep;
+		boolean flag = false;
 		
-		if(annee > 2023)
-			flag = false;
+		System.out.println("-----------------------\r\n"
+				+ "RENDRE UN OBJET RECLAME\r\n"
+				+ "-----------------------");
 		
-		else if(mois > 12)
-			flag = false;
+		id = TP3Utils.validerTypeEntierStrictPositif("Entrez le numero d'identification (id) de l'objet a rendre : ",ERR_POSITIF);
 		
-		else if(mois < 8 && mois % 2 != 0) {
-			if(jour > 31)
-				flag = false;
-			else if(mois == 2 && jour > 29)
-				flag = false;
+		while(i<objetsPerdus.length || !flag) {
+			if(objetsPerdus[i].id == id)
+				flag = true;
+			i++;
 		}
 		
-		else if(mois > 7 && mois % 2 == 0) {
-			if(jour > 31)
-				flag = false;
+		if(!flag) {
+			System.out.println(MSG_PAS_TROUVER);
+		
+		System.out.println("Appuyez sur <ENTREE> pour revenir au menu... ");
+		Clavier.lireFinLigne();
 		}
 		
+		else {
+			rep = TP3Utils.validerRepDeuxChoix(MSG_TROUVER, ERR_REP, "oui", "non");
+			
+			if(rep.equalsIgnoreCase("non")) {
 				
-		return flag;
+			}
+		}
+		
+	}
+	
+	public static void affichage(ObjetPerdu[] objetsPerdus) {
+		int i=0; 
+		System.out.println("----------------------------------\r\n"
+				+ "AFFICHER TOUS LES OBJETS CONSIGNES\r\n"
+				+ "----------------------------------");
+		
+		while(objetsPerdus[i] != null) {
+			System.out.println("ID           : " + objetsPerdus[i].id);
+			System.out.println("MOTS CLES    : " + objetsPerdus[i].obtenirMotsCles());
+			System.out.println("CATEGORIE    : " + objetsPerdus[i].CATEGORIES[objetsPerdus[i].categorie]);
+			System.out.println("DATE         : " + objetsPerdus[i].getDate());
+			System.out.println("LOCALISATION : " + objetsPerdus[i].getLocalisation());
+			System.out.println();
+			i++;
+		}
+		
+		System.out.println("Appuyez sur <ENTREE> pour revenir au menu... ");
+		Clavier.lireFinLigne();
 	}
 	
 	public static void consignerObjet(Date date, ObjetPerdu[] objetsPerdus) {
@@ -53,53 +82,50 @@ public class GestionObjetsPerdus {
 
             switch (choix) {
                 case "1":
-                	categorie = 0 ;
+                	categorie = ObjetPerdu.CAT_BIJOU ;
                     break;
 
                 case "2":
-                	categorie = 1;
+                	categorie = ObjetPerdu.CAT_VETEMENT;
                     break;
 
                 case "3":
-                	categorie = 2;
+                	categorie = ObjetPerdu.CAT_ARGENT_PORTEFEUILLE;
                     break;
 
                 case "4":
-                	categorie = 3;
+                	categorie = ObjetPerdu.CAT_CLE;
                     break;
                     
                 case "5":
-                	categorie = 4;
+                	categorie = ObjetPerdu.CAT_AUTRE;
                     break;
                     
                 default:
-                    System.out.println(ERREUR_MENU);
+                    System.out.println(ERREUR_MENU_CATEGORIE);
             }
 		 
                        
-		}while(choix.equals("1") || choix.equals("2") || choix.equals("3") || choix.equals("4") || choix.equals("5"));
+		}while(!choix.equals("1") && !choix.equals("2") & !choix.equals("3") && !choix.equals("4") && !choix.equals("5")); //there is better
 		
 		do {
 			do {
 				
-				System.out.println("Date de consignation : ");
-				jour = TP3Utils.validerTypeEntierStrictPositif(Clavier.lireString(),ERR_POSITIF);
+				jour = TP3Utils.validerTypeEntierStrictPositif("Date de consignation : ",ERR_POSITIF);
 				
-			}while(jour != 0);
+			}while(jour <= 0);
 			
 			do {
 				
-				System.out.println("Entrez le mois de la date : ");
-				mois = TP3Utils.validerTypeEntierStrictPositif(Clavier.lireString(),ERR_POSITIF);
+				mois = TP3Utils.validerTypeEntierStrictPositif("Entrez le mois de la date : ",ERR_POSITIF);
 				
-			}while(mois != 0);
+			}while(mois <= 0);
 			
 			do {
 				
-				System.out.println("Entrez l'annee de la date : ");
-				annee = TP3Utils.validerTypeEntierStrictPositif(Clavier.lireString(),ERR_POSITIF);
+				annee = TP3Utils.validerTypeEntierStrictPositif("Entrez l'annee de la date : ",ERR_POSITIF);
 				
-			}while(mois != 0);
+			}while(mois <= 0);
 			
 			date.setJour(jour);
 			date.setMois(mois);
@@ -111,19 +137,20 @@ public class GestionObjetsPerdus {
 				System.out.println("ERREUR, date invalide! RECOMMENCEZ...");
 		
 			
-		}while(flag);
+		}while(!flag);
 	
 		motsCle = TP3Utils.validerLngChaine(MSG_SOL_MOTS_CLE,MSG_ERR_MOTS_CLE,2,50);
 		motsCles = motsCle.split("\\s+") ; 
 		
 		
-		System.out.println("Entrez la localisation de l'objet perdu consigne : \r\n");
-		localisation = TP3Utils.validerLngChaine(MSG_SOL_MOTS_CLE,MSG_ERR_MOTS_CLE,5,50);
+		localisation = TP3Utils.validerLngChaine("Entrez la localisation de l'objet perdu consigne : \r\n",MSG_ERR_MOTS_CLE,5,50);
 		
 		objet = new ObjetPerdu(categorie,date,localisation);
 		
-		if(objetsPerdus[objetsPerdus.length - 1] != null)
+		
+		if(objetsPerdus.length == 0 || objetsPerdus[objetsPerdus.length - 1] != null)
 			objetsPerdus = ObjetPerdu.agrandirTableau(objetsPerdus,4);
+		
 		
 		else {
 			objetsPerdus[ObjetPerdu.sequenceId] = objet;
@@ -158,7 +185,8 @@ public class GestionObjetsPerdus {
 	public static void main(String[] args) {
 		Date date = new Date();
         String choix;
-        ObjetPerdu[] objetsPerdus = TP3Utils.recupererDonnees();
+        ObjetPerdu[] objetsPerdus = new ObjetPerdu[10];
+        //objetsPerdus = TP3Utils.recupererDonnees();
 
         do {
             menu();
@@ -169,10 +197,11 @@ public class GestionObjetsPerdus {
             switch (choix) {
                 case "1":
                 	consignerObjet(date,objetsPerdus);
+
                     break;
                     
                 case "2":
-                    
+                    reclamation(objetsPerdus);
                     break;
 
                 case "3":
@@ -186,7 +215,7 @@ public class GestionObjetsPerdus {
                 	
                     break;
                 case "6":
-                	
+                	affichage(objetsPerdus);
                     break;
                 case "7":
                 	TP3Utils.sauvegarder(objetsPerdus);
