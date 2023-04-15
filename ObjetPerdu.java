@@ -4,7 +4,7 @@ public class ObjetPerdu {
 	final static int CAT_BIJOU = 0, CAT_VETEMENT = 1, CAT_ARGENT_PORTEFEUILLE = 2,CAT_CLE  = 3, CAT_AUTRE = 4; 
 	final static String[] CATEGORIES = {"bijou", "vetement", "argent / portefeuille", "cle(s)", "autre"} ;
 	
-	static int sequenceId = -1; 
+	static int sequenceId = 0; 
 	
 	int id, categorie, nbrElem=0;
 	
@@ -51,7 +51,7 @@ public class ObjetPerdu {
 			 String [] tab2 = new String [tab.length - nbrCasesDeMoins];
 
 			 //copier les éléments de tab dans tab2
-			 for (int i = 0, j = 0 ; i < tab.length ; j++,i++) {
+			 for (int i = 0, j = 0 ; i < tab.length -1 ; j++,i++) {
 				 if(tab[i].equals("$"))
 				 	i++;
 				 
@@ -148,12 +148,13 @@ public class ObjetPerdu {
 		boolean flag= false;
 		
 		
-		do  {
+		while(i < motsCles.length && !flag)  {
 			if(motCle.equalsIgnoreCase(motsCles[i]))
 				flag = true;
-			i++;
+			else
+				i++;
 		}
-		while(i < motsCles.length -1 || flag);
+		
 		
 		return flag;
 	}
@@ -202,8 +203,14 @@ public class ObjetPerdu {
 	}
 	
 	
-	public int getSequenceId() {
+	public static int getSequenceId() {
 		return sequenceId;
+	}
+
+	public static void setSequenceId(int i) {
+		// TODO Auto-generated method stub
+		sequenceId = i;
+		
 	}
 	
 }
