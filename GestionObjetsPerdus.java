@@ -1,8 +1,8 @@
 
 public class GestionObjetsPerdus {
-	final static String ERREUR_MENU = "ERREUR, vous devez entrer un choix entre 1 et 7! RECOMMENCEZ..." ,ERR_POSITIF = "ERREUR, entrez un entier strictement positif! RECOMMENCEZ...", MSG_SOL_MOTS_CLE = "Entrez les mots-cles decrivant l'objet a consigner : " , MSG_ERR_MOTS_CLE = "ERREUR, la chaine doit contenir entre 2 et 50 caracteres! RECOMMENCEZ...", MSG_ERR_MOTS_LOCALISATION = "ERREUR, la chaine doit contenir entre 5 et 50 caracteres! RECOMMENCEZ...", ERREUR_MENU_CATEGORIE = "ERREUR, vous devez entrer un choix entre 1 et 5! RECOMMENCEZ...", MSG_TROUVER = "Voulez-vous vraiment rendre cet objet perdu (oui / non) : ", ERR_REP = "ERREUR, vous devez entrer OUI ou NON! RECOMMENCEZ..." ,MSG_PAS_TROUVER = "** L'OBJET PERDU AYANT CET ID N'EST PAS CONSIGNE **";
+	final static String ERREUR_MENU = "ERREUR, vous devez entrer un choix entre 1 et 7! RECOMMENCEZ..." ,REMISE_SUCCES = "** LA REMISE DE L'OBJET PERDU A ETE EFFECTUEE AVEC SUCCES **",ERR_POSITIF = "ERREUR, entrez un entier strictement positif! RECOMMENCEZ...", MSG_SOL_MOTS_CLE = "Entrez les mots-cles decrivant l'objet a consigner : " , MSG_ERR_MOTS_CLE = "ERREUR, la chaine doit contenir entre 2 et 50 caracteres! RECOMMENCEZ...", MSG_ERR_MOTS_LOCALISATION = "ERREUR, la chaine doit contenir entre 5 et 50 caracteres! RECOMMENCEZ...",ANNULATION_REMISE = "** LA REMISE DE L'OBJET PERDU A ETE ANNULEE **", ERREUR_MENU_CATEGORIE = "ERREUR, vous devez entrer un choix entre 1 et 5! RECOMMENCEZ...", MSG_TROUVER = "Voulez-vous vraiment rendre cet objet perdu (oui / non) : ", ERR_REP = "ERREUR, vous devez entrer OUI ou NON! RECOMMENCEZ..." ,MSG_PAS_TROUVER = "** L'OBJET PERDU AYANT CET ID N'EST PAS CONSIGNE **";
 	
-	public void reclamation(ObjetPerdu[] objetsPerdus) {
+	public static void reclamation(ObjetPerdu[] objetsPerdus) {
 		int id, i=0;
 		String rep;
 		boolean flag = false;
@@ -12,12 +12,15 @@ public class GestionObjetsPerdus {
 				+ "-----------------------");
 		
 		id = TP3Utils.validerTypeEntierStrictPositif("Entrez le numero d'identification (id) de l'objet a rendre : ",ERR_POSITIF);
-		
-		while(i<objetsPerdus.length || !flag) {
+				
+		while(i < objetsPerdus.length -1 && !flag) {
 			if(objetsPerdus[i].id == id)
 				flag = true;
-			i++;
+			else 
+				i++;
 		}
+		
+		System.out.println(i);
 		
 		if(!flag) {
 			System.out.println(MSG_PAS_TROUVER);
@@ -27,11 +30,30 @@ public class GestionObjetsPerdus {
 		}
 		
 		else {
+			System.out.println("ID           : " + objetsPerdus[i].id);
+			System.out.println("MOTS CLES    : " + objetsPerdus[i].obtenirMotsCles());
+			System.out.println("CATEGORIE    : " + objetsPerdus[i].CATEGORIES[objetsPerdus[i].categorie]);
+			System.out.println("DATE         : " + objetsPerdus[i].getDate());
+			System.out.println("LOCALISATION : " + objetsPerdus[i].getLocalisation());
+			System.out.println();			
+			
 			rep = TP3Utils.validerRepDeuxChoix(MSG_TROUVER, ERR_REP, "oui", "non");
 			
 			if(rep.equalsIgnoreCase("non")) {
-				
+				System.out.println(ANNULATION_REMISE);
+				System.out.println("Appuyez sur <ENTREE> pour revenir au menu... ");
+				Clavier.lireFinLigne();
 			}
+			
+			else if(rep.equalsIgnoreCase("oui")) {
+				objetsPerdus[i] = null;
+				objetsPerdus = TP3Utils.ordonnerObjetsPerdusParDate(objetsPerdus);
+				ObjetPerdu.sequenceId--;
+				System.out.println(REMISE_SUCCES);
+				System.out.println("Appuyez sur <ENTREE> pour revenir au menu... ");
+				Clavier.lireFinLigne();
+			}
+				
 		}
 		
 	}
@@ -153,10 +175,10 @@ public class GestionObjetsPerdus {
 		
 		
 		else {
-			objetsPerdus[ObjetPerdu.sequenceId] = objet;
-			objetsPerdus[ObjetPerdu.sequenceId].motsCles = ObjetPerdu.agrandirTableau(objetsPerdus[ObjetPerdu.sequenceId].motsCles,motsCles.length); 
+			objetsPerdus[ObjetPerdu.sequenceId -2] = objet;
+			objetsPerdus[ObjetPerdu.sequenceId -2].motsCles = ObjetPerdu.agrandirTableau(objetsPerdus[ObjetPerdu.sequenceId -2].motsCles,motsCles.length); 
 			for(int i=0 ; i<motsCles.length ; i++)
-				objetsPerdus[ObjetPerdu.sequenceId].ajouterMotCle(motsCles[i]); //Msg d erreur ?
+				objetsPerdus[ObjetPerdu.sequenceId -2].ajouterMotCle(motsCles[i]); //Msg d erreur ?
 			
 		}
 		

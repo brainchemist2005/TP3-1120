@@ -4,7 +4,7 @@ public class ObjetPerdu {
 	final static int CAT_BIJOU = 0, CAT_VETEMENT = 1, CAT_ARGENT_PORTEFEUILLE = 2,CAT_CLE  = 3, CAT_AUTRE = 4; 
 	final static String[] CATEGORIES = {"bijou", "vetement", "argent / portefeuille", "cle(s)", "autre"} ;
 	
-	static int sequenceId = 0; 
+	static int sequenceId = 1; 
 	
 	int id, categorie, nbrElem=0;
 	
@@ -18,8 +18,8 @@ public class ObjetPerdu {
 		this.categorie = categorie; //check categorie doit etre entre 0 et length-1
 		this.date = date;
 		this.localisation = localisation;
-		sequenceId++;
 		this.id = sequenceId;
+		sequenceId++;
 		motsCles = new String[nbrElem];
 	}
 	
