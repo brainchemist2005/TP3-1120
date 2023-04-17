@@ -87,7 +87,7 @@ public class GestionObjetsPerdus {
 	}
 	
 	public static void rechercherObjetDate(ObjetPerdu[] objetsPerdus) {
-		int jour,mois,annee,j=0, i=0,jourf,moisf,anneef;
+		int jour,mois,annee,r=0,j=0, i=0,jourf,moisf,anneef;
 		int[] id = new int[0];
 		Date date = new Date(),date2 = new Date();
 		boolean flag;
@@ -220,45 +220,45 @@ public class GestionObjetsPerdus {
 					
 					flag = date2.estDateValide();
 					
-					if(!flag)
+					if(!flag && date.estPlusPetite(date2))
 						System.out.println("ERREUR, date invalide! RECOMMENCEZ...");
 				
 					
 				}while(!flag);
 				
-				flag = true;
+				flag = false;
 			
 				objetsPerdus = TP3Utils.ordonnerObjetsPerdusParDate(objetsPerdus);
 				
 
 				i=0;
-				while(i < ObjetPerdu.sequenceId  && flag) {					
-					if(!(objetsPerdus[i].date.estPlusPetite(date))) {
-						System.out.println("tester"); //checked
-						flag = false;
+				while(i < ObjetPerdu.sequenceId -1 && !flag) {	
+					if((objetsPerdus[i].date.estPlusPetite(date))) {
+						i++;
 					}
 					else {
-						i++;
-						System.out.println("fail");
+						flag = true;
 					}
 				}
 				
-				if(flag) {
+				if(!flag) {
+					System.out.println("+++here+++++");
 					System.out.println(OBJET_NON_TROUVE);
-
 				}
 				
 				else {
-				flag = false;
+				//flag = false;
 				
 				//j=i;
-				while(j < ObjetPerdu.sequenceId - 1 && !flag) {
-					
-					if(!(objetsPerdus[j].date.estPlusPetite(date2))) {
-						
+				while(r < objetsPerdus.length && objetsPerdus[j] != null  /*&& !flag*/) {
+					System.out.println(j);
+					if((objetsPerdus[j].date.estPlusPetite(date2))) {
+						j++;
+						r++;
 					}
 					else
-						j++;
+						r++;
+						//flag = true;
 				}
 				
 				j--;
@@ -267,11 +267,11 @@ public class GestionObjetsPerdus {
 					id = ObjetPerdu.agrandirTableau(id,1);
 					id[l] = objetsPerdus[z].id-1;
 				}
-				
+								
 				
 				objetsPerdus = TP3Utils.ordonnerObjetsPerdusParId(objetsPerdus);
 				i=0;
-				if(flag) {
+				if(flag && id.length != 0) {
 					while(i < id.length) {
 						System.out.println("ID           : " + objetsPerdus[id[i]].id);
 						System.out.println("MOTS CLES    : " + objetsPerdus[id[i]].obtenirMotsCles());
@@ -282,11 +282,13 @@ public class GestionObjetsPerdus {
 						i++;
 					}
 				}
+				
+				else {
+					System.out.println("-----here-----" + id.length);
+					System.out.println(OBJET_NON_TROUVE);
 				}
-				
-				
-			
-				
+				}
+							
 				
 			}
 
