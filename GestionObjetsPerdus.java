@@ -36,7 +36,6 @@ public class GestionObjetsPerdus {
 					+ "4. cle(s)\r\n"
 					+ "5. autre");
 			
-			System.out.print("ERREUR, entrez un numero entre 1 et 5! RECOMMENCEZ..."); //a refaire msg erreur ?
 			choix = Clavier.lireString();
 
 	            switch (choix) {
@@ -68,7 +67,7 @@ public class GestionObjetsPerdus {
 
 		System.out.println("RESULTAT(S) DE LA RECHERCHE : ");
 		
-		while(objetsPerdus[i] != null) {
+		while(i < ObjetPerdu.sequenceId - 1) {
 			if(objetsPerdus[i].categorie == categorie) {
 				flag = true;
 				System.out.println("ID           : " + objetsPerdus[i].id);
@@ -88,7 +87,8 @@ public class GestionObjetsPerdus {
 	}
 	
 	public static void rechercherObjetDate(ObjetPerdu[] objetsPerdus) {
-		int jour,mois,annee,i=0,jourf,moisf,anneef;
+		int jour,mois,annee,j=0, i=0,jourf,moisf,anneef;
+		int[] id = new int[0];
 		Date date = new Date(),date2 = new Date();
 		boolean flag;
 		String rep;
@@ -140,7 +140,7 @@ public class GestionObjetsPerdus {
 						
 				System.out.println("RESULTAT(S) DE LA RECHERCHE : ");
 				
-				while(objetsPerdus[i] != null) {
+				while(i < ObjetPerdu.sequenceId - 1) {
 					if(objetsPerdus[i].date.estEgale(date)) {
 						flag = true;
 						System.out.println("ID           : " + objetsPerdus[i].id);
@@ -226,7 +226,66 @@ public class GestionObjetsPerdus {
 					
 				}while(!flag);
 				
-				// i have start date and end date 
+				flag = true;
+			
+				objetsPerdus = TP3Utils.ordonnerObjetsPerdusParDate(objetsPerdus);
+				
+
+				i=0;
+				while(i < ObjetPerdu.sequenceId  && flag) {					
+					if(!(objetsPerdus[i].date.estPlusPetite(date))) {
+						System.out.println("tester"); //checked
+						flag = false;
+					}
+					else {
+						i++;
+						System.out.println("fail");
+					}
+				}
+				
+				if(flag) {
+					System.out.println(OBJET_NON_TROUVE);
+
+				}
+				
+				else {
+				flag = false;
+				
+				//j=i;
+				while(j < ObjetPerdu.sequenceId - 1 && !flag) {
+					
+					if(!(objetsPerdus[j].date.estPlusPetite(date2))) {
+						
+					}
+					else
+						j++;
+				}
+				
+				j--;
+				
+				for(int z=i,l=0; z<=j; l++,z++) {
+					id = ObjetPerdu.agrandirTableau(id,1);
+					id[l] = objetsPerdus[z].id-1;
+				}
+				
+				
+				objetsPerdus = TP3Utils.ordonnerObjetsPerdusParId(objetsPerdus);
+				i=0;
+				if(flag) {
+					while(i < id.length) {
+						System.out.println("ID           : " + objetsPerdus[id[i]].id);
+						System.out.println("MOTS CLES    : " + objetsPerdus[id[i]].obtenirMotsCles());
+						System.out.println("CATEGORIE    : " + ObjetPerdu.CATEGORIES[objetsPerdus[id[i]].categorie]);
+						System.out.println("DATE         : " + objetsPerdus[id[i]].getDate());
+						System.out.println("LOCALISATION : " + objetsPerdus[id[i]].getLocalisation());
+						System.out.println();
+						i++;
+					}
+				}
+				}
+				
+				
+			
 				
 				
 			}
@@ -256,7 +315,7 @@ public class GestionObjetsPerdus {
 			
 			System.out.println("RESULTAT(S) DE LA RECHERCHE :");
 			
-			while(objetsPerdus[i] != null) {
+			while(i < ObjetPerdu.sequenceId - 1) {
 				objetsPerdus[i].motsCles =  objetsPerdus[i].obtenirMotsCles().split(" ");
 					if(containsArray(objetsPerdus[i].motsCles ,motsCles)) {
 						flag = true;
@@ -290,14 +349,13 @@ public class GestionObjetsPerdus {
 		
 		id = TP3Utils.validerTypeEntierStrictPositif("Entrez le numero d'identification (id) de l'objet a rendre : ",ERR_POSITIF);
 				
-		while(i < objetsPerdus.length -1 && !flag) {
+		while(i < objetsPerdus.length  && !flag) {
 			if(objetsPerdus[i].id == id)
 				flag = true;
 			else 
 				i++;
 		}
 		
-		System.out.println(i);
 		
 		if(!flag) {
 			System.out.println(MSG_PAS_TROUVER);
@@ -341,7 +399,7 @@ public class GestionObjetsPerdus {
 				+ "AFFICHER TOUS LES OBJETS CONSIGNES\r\n"
 				+ "----------------------------------");
 		
-		while(objetsPerdus[i] != null) {
+		while(i < ObjetPerdu.sequenceId - 1) {
 			System.out.println("ID           : " + objetsPerdus[i].id);
 			System.out.println("MOTS CLES    : " + objetsPerdus[i].obtenirMotsCles());
 			System.out.println("CATEGORIE    : " + ObjetPerdu.CATEGORIES[objetsPerdus[i].categorie]);
@@ -484,7 +542,7 @@ public class GestionObjetsPerdus {
 	public static void main(String[] args) {
 		Date date = new Date();
         String choix;
-        ObjetPerdu[] objetsPerdus = new ObjetPerdu[10];
+        ObjetPerdu[] objetsPerdus = null; //= new ObjetPerdu[10];
         //objetsPerdus = TP3Utils.recupererDonnees();
 
         do {
@@ -495,7 +553,8 @@ public class GestionObjetsPerdus {
 
             switch (choix) {
                 case "1":
-                	consignerObjet(date,objetsPerdus);
+                	//consignerObjet(date,objetsPerdus);
+                    objetsPerdus = TP3Utils.recupererDonnees();
                     break;
                     
                 case "2":
