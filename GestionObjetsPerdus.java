@@ -242,7 +242,6 @@ public class GestionObjetsPerdus {
 				}
 				
 				if(!flag) {
-					System.out.println("+++here+++++");
 					System.out.println(OBJET_NON_TROUVE);
 				}
 				
@@ -251,7 +250,6 @@ public class GestionObjetsPerdus {
 				
 				//j=i;
 				while(r < objetsPerdus.length && objetsPerdus[j] != null  /*&& !flag*/) {
-					System.out.println(j);
 					if((objetsPerdus[j].date.estPlusPetite(date2))) {
 						j++;
 						r++;
@@ -284,14 +282,12 @@ public class GestionObjetsPerdus {
 				}
 				
 				else {
-					System.out.println("-----here-----" + id.length);
 					System.out.println(OBJET_NON_TROUVE);
 				}
 				}
 							
 				
 			}
-
 		
 		
 		System.out.println("Appuyez sur <ENTREE> pour revenir au menu... ");
