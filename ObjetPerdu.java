@@ -12,12 +12,11 @@ public class ObjetPerdu {
 	private Date date = new Date();
 	
 	private String localisation;
-	String valeurNonSign = "-1";
 	
 	String[] motsCles;
 	
 	public ObjetPerdu(int categorie, Date date, String localisation){
-		this.categorie = categorie; //check categorie doit etre entre 0 et length-1
+		this.categorie = categorie;
 		this.date = date;
 		this.localisation = localisation;
 		this.id = sequenceId;
@@ -63,12 +62,15 @@ public class ObjetPerdu {
 			 //creer un nouveau tableau plus grand
 			 String [] tab2 = new String [tab.length - nbrCasesDeMoins];
 
+			 int j = 0;
+
 			 //copier les éléments de tab dans tab2
-			 for (int i = 0, j = 0 ; i < tab.length -1 ; j++,i++) {
+			 for (int i = 0; i < tab.length -1 ;i++) {
 				 if(tab[i].equals("$"))
 				 	i++;
 				 
 				 tab2[j] = tab[i];
+				 j++;
 			 }
 			 
 			 return tab2;
@@ -77,19 +79,21 @@ public class ObjetPerdu {
 	public static ObjetPerdu[] diminuerTableau(ObjetPerdu[] tab, int nbrCasesDeMoins,int m) {
 			 //creer un nouveau tableau plus grand
 		ObjetPerdu [] tab2 = new ObjetPerdu [tab.length - nbrCasesDeMoins];
-		int j=0;
+		int i=0;
 
 		tab[m] = null;
 			 //copier les éléments de tab dans tab2
-			 for (int i = 0; i < tab.length ;i++) {
-				 if(tab[i] == null)
+			 for (int j = 0; j < tab2.length ;j++) {
+				 if(i<tab.length-1 && tab[i] == null) {
 				 	i++;
+				 }
 				 
-				 tab2[j] = tab[i];
-				 j++;
+				 if(tab[i] != null) {
+					 tab2[j] = tab[i];
+					 i++;
+				 }
 			 }
 			 
-			 System.out.println("C'est bon ");
 
 			 return tab2;
 		 }

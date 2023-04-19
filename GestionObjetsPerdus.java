@@ -1,6 +1,6 @@
 
 public class GestionObjetsPerdus {
-	final static String ENTREE = "Appuyez sur <ENTREE> pour revenir au menu... ", RECHERCHE_MOTCLE= "------------------------\r\nRECHERCHER PAR MOTS CLES\r\n------------------------", DATE_INVALIDE = "ERREUR, date invalide! RECOMMENCEZ..." ,MENU = "=========================\r\nGESTION DES OBJETS PERDUS\r\n=========================\r\n\r\n\r\n----\r\nMENU\r\n----\r\n1. Consigner un objet perdu\r\n2. Rendre un objet reclame\r\n3. Rechercher un objet par mots cles\r\n4. Rechercher un objet par date(s)\r\n5. Rechercher un objet par categorie\r\n6. Afficher tous les objets consignes\r\n7. Quitter",  RESULAT_RECHERCHE = "RESULTAT(S) DE LA RECHERCHE : ", RECHERCHE_DATE = "----------------------\r\nRECHERCHER PAR DATE(S)\r\n----------------------", CHOIX = "Entrez votre choix : ", CATEGORIE = "CATEGORIES :\r\n1. bijou\r\n2. vetement\r\n3. argent / portefeuille\r\n4. cle(s)\r\n5. autre" ,ERR_REP_D_P = "ERREUR, entrez le caracere D ou P! RECOMMENCEZ..." ,DATE_PERIODE = "Specifier une (d)ate ou une (p)eriode : " ,OBJET_NON_TROUVE = "** AUCUN OBJET TROUVE **", ERREUR_MENU = "ERREUR, vous devez entrer un choix entre 1 et 7! RECOMMENCEZ..." ,REMISE_SUCCES = "** LA REMISE DE L'OBJET PERDU A ETE EFFECTUEE AVEC SUCCES **",ERR_POSITIF = "ERREUR, entrez un entier strictement positif! RECOMMENCEZ...", MSG_SOL_MOTS_CLE = "Entrez les mots-cles decrivant l'objet a consigner : " , MSG_ERR_MOTS_CLE = "ERREUR, la chaine doit contenir entre 2 et 50 caracteres! RECOMMENCEZ...",RECHERCHE_CATEGORIE = "------------------------\r\nRECHERCHER PAR CATEGORIE\r\n------------------------" ,MSG_ERR_MOTS_LOCALISATION = "ERREUR, la chaine doit contenir entre 5 et 50 caracteres! RECOMMENCEZ...",ANNULATION_REMISE = "** LA REMISE DE L'OBJET PERDU A ETE ANNULEE **", ERREUR_MENU_CATEGORIE = "ERREUR, vous devez entrer un choix entre 1 et 5! RECOMMENCEZ...", MSG_TROUVER = "Voulez-vous vraiment rendre cet objet perdu (oui / non) : ", ERR_REP = "ERREUR, vous devez entrer OUI ou NON! RECOMMENCEZ...",MSG_PAS_DOBJET = "** AUCUN OBJET PERDU N'EST CONSIGNE **",MSG_SOL_MOTS_CLE_RECHERCHE = "Mot(s) cle(s) recherches : " ,MSG_PAS_TROUVER = "** L'OBJET PERDU AYANT CET ID N'EST PAS CONSIGNE **";
+	final static String AUREVOIR = "AUREVOIR !", ENTREE = "Appuyez sur <ENTREE> pour revenir au menu... ", RECHERCHE_MOTCLE= "------------------------\r\nRECHERCHER PAR MOTS CLES\r\n------------------------", DATE_INVALIDE = "ERREUR, date invalide! RECOMMENCEZ..." ,MENU = "=========================\r\nGESTION DES OBJETS PERDUS\r\n=========================\r\n\r\n\r\n----\r\nMENU\r\n----\r\n1. Consigner un objet perdu\r\n2. Rendre un objet reclame\r\n3. Rechercher un objet par mots cles\r\n4. Rechercher un objet par date(s)\r\n5. Rechercher un objet par categorie\r\n6. Afficher tous les objets consignes\r\n7. Quitter",  RESULAT_RECHERCHE = "RESULTAT(S) DE LA RECHERCHE : ", RECHERCHE_DATE = "----------------------\r\nRECHERCHER PAR DATE(S)\r\n----------------------", CHOIX = "Entrez votre choix : ", CATEGORIE = "CATEGORIES :\r\n1. bijou\r\n2. vetement\r\n3. argent / portefeuille\r\n4. cle(s)\r\n5. autre" ,ERR_REP_D_P = "ERREUR, entrez le caracere D ou P! RECOMMENCEZ..." ,DATE_PERIODE = "Specifier une (d)ate ou une (p)eriode : " ,OBJET_NON_TROUVE = "** AUCUN OBJET TROUVE **", ERREUR_MENU = "ERREUR, vous devez entrer un choix entre 1 et 7! RECOMMENCEZ..." ,REMISE_SUCCES = "** LA REMISE DE L'OBJET PERDU A ETE EFFECTUEE AVEC SUCCES **",ERR_POSITIF = "ERREUR, entrez un entier strictement positif! RECOMMENCEZ...", MSG_SOL_MOTS_CLE = "Entrez les mots-cles decrivant l'objet a consigner : " , MSG_ERR_MOTS_CLE = "ERREUR, la chaine doit contenir entre 2 et 50 caracteres! RECOMMENCEZ...",RECHERCHE_CATEGORIE = "------------------------\r\nRECHERCHER PAR CATEGORIE\r\n------------------------" ,MSG_ERR_MOTS_LOCALISATION = "ERREUR, la chaine doit contenir entre 5 et 50 caracteres! RECOMMENCEZ...",ANNULATION_REMISE = "** LA REMISE DE L'OBJET PERDU A ETE ANNULEE **", ERREUR_MENU_CATEGORIE = "ERREUR, vous devez entrer un choix entre 1 et 5! RECOMMENCEZ...", MSG_TROUVER = "Voulez-vous vraiment rendre cet objet perdu (oui / non) : ", ERR_REP = "ERREUR, vous devez entrer OUI ou NON! RECOMMENCEZ...",MSG_PAS_DOBJET = "** AUCUN OBJET PERDU N'EST CONSIGNE **",MSG_SOL_MOTS_CLE_RECHERCHE = "Mot(s) cle(s) recherches : " ,MSG_PAS_TROUVER = "** L'OBJET PERDU AYANT CET ID N'EST PAS CONSIGNE **";
 	
 	public static boolean containsArray(String[] tableau, String[] sousTableau) {
 	    for (int i = 0; i <= tableau.length - sousTableau.length; i++) {
@@ -84,7 +84,7 @@ public class GestionObjetsPerdus {
 		int jour,mois,annee,r=0,j=0, i=0,jourf,moisf,anneef;
 		int[] id = new int[0];
 		Date date = new Date(),date2 = new Date();
-		boolean flag;
+		boolean flag, flag1;
 		String rep;
 		
 		
@@ -93,7 +93,9 @@ public class GestionObjetsPerdus {
 			
 			
 			rep = TP3Utils.validerRepDeuxChoix(DATE_PERIODE, ERR_REP_D_P, "p", "d");
-			
+			date2.setMois(1);
+			date2.setJour(1);
+			date2.setAnnee(1);
 			
 			
 			if(rep.equalsIgnoreCase("p")) {
@@ -126,16 +128,20 @@ public class GestionObjetsPerdus {
 					flag = date.estDateValide();
 					
 
-					flag = date.estPlusPetite(Date.dateDuJour());
+					flag1 = date.estPlusPetite(Date.dateDuJour());
 					
-					if(!flag)
+					if(!flag1)
 						flag = date.estEgale(Date.dateDuJour());
 					
 					if(!flag)
 						System.out.println(DATE_INVALIDE);
+					
+					else if(!flag1)
+						System.out.println(DATE_INVALIDE);
+
 				
 					
-				}while(!flag);
+				}while(!flag || !flag1);
 				
 				flag = false;
 				
@@ -199,17 +205,13 @@ public class GestionObjetsPerdus {
 				}
 				
 				else {
-				//flag = false;
-				
-				//j=i;
-				while(r < objetsPerdus.length && objetsPerdus[j] != null  /*&& !flag*/) {
+				while(r < objetsPerdus.length && objetsPerdus[j] != null ) {
 					if((objetsPerdus[j].getDate().estPlusPetite(date2))) {
 						j++;
 						r++;
 					}
 					else
 						r++;
-						//flag = true;
 				}
 				
 				j--;
@@ -244,16 +246,15 @@ public class GestionObjetsPerdus {
 			}
 			
 			if(rep.equalsIgnoreCase("d") || date.estEgale(date2)) {
-				System.out.println("Date du debut de la periode ++++d++++: ");
+				
 				if(date.estEgale(date2)) {
-					
+					System.out.println(date.estEgale(date2));
 				}
 				
 				else {
-
 				do {
 					do {
-						
+						System.out.println("Date du debut de la periode ");
 						jour = TP3Utils.validerTypeEntierStrictPositif("\tEntrez le jour de la date : ",ERR_POSITIF);
 						
 					}while(jour <= 0);
@@ -270,22 +271,24 @@ public class GestionObjetsPerdus {
 						
 					}while(mois <= 0);
 					
-					date.setJour(jour);
+					date.setJour(jour+1);
 					date.setMois(mois);
 					date.setAnnee(annee);
 					
 					flag = date.estDateValide();
 					
-					flag = date.estPlusPetite(Date.dateDuJour());
+					flag1 = date.estPlusPetite(Date.dateDuJour());
 					
-					if(!flag)
+					if(!flag1)
 						flag = date.estEgale(Date.dateDuJour());
 					
 					if(!flag)
 						System.out.println(DATE_INVALIDE);
-				
 					
-				}while(!flag);
+					else if(!flag1)
+						System.out.println(DATE_INVALIDE);
+
+				}while(!flag || !flag1);
 				
 				}
 				flag = false;
@@ -313,8 +316,7 @@ public class GestionObjetsPerdus {
 		
 		System.out.println(ENTREE);
 		Clavier.lireFinLigne();
-		
-		
+				
 	}
 	
 	public static void rechercherObjetMots(ObjetPerdu[] objetsPerdus) {
@@ -377,8 +379,6 @@ public class GestionObjetsPerdus {
 		if(!flag) {
 			System.out.println(MSG_PAS_TROUVER);
 		
-		System.out.println(ENTREE);
-		Clavier.lireFinLigne();
 		}
 		
 		else {
@@ -393,21 +393,23 @@ public class GestionObjetsPerdus {
 			
 			if(rep.equalsIgnoreCase("non")) {
 				System.out.println(ANNULATION_REMISE);
-				System.out.println(ENTREE);
-				Clavier.lireFinLigne();
 			}
 			
 			else if(rep.equalsIgnoreCase("oui")) {
+				
 				objetsPerdus = ObjetPerdu.diminuerTableau(objetsPerdus, 1, i);
 				ObjetPerdu.setSequenceId(ObjetPerdu.getSequenceId()-1);
 				System.out.println(REMISE_SUCCES);
-				System.out.println(ENTREE);
-				Clavier.lireFinLigne();
+				
 				
 						
 			}
 				
 		}
+		
+		System.out.println(ENTREE);
+		Clavier.lireFinLigne();
+		
 		return objetsPerdus;
 		
 	}
@@ -432,12 +434,12 @@ public class GestionObjetsPerdus {
 		Clavier.lireFinLigne();
 	}
 	
-	public static void consignerObjet(Date date, ObjetPerdu[] objetsPerdus) {
+	public static ObjetPerdu[] consignerObjet(Date date, ObjetPerdu[] objetsPerdus) {
 		ObjetPerdu objet;
 		String choix, motsCle, localisation;
 		int categorie = 0;
 		String motsCles[]; 
-		boolean flag;
+		boolean flag,flag1;
 		int jour = 0, mois, annee;
 		
 		do {
@@ -510,22 +512,26 @@ public class GestionObjetsPerdus {
 			flag = date.estDateValide();
 			
 
-			flag = date.estPlusPetite(Date.dateDuJour());
-			
-			if(!flag)
+			flag1 = date.estPlusPetite(Date.dateDuJour());
+						
+			if(!flag1)
 				flag = date.estEgale(Date.dateDuJour());
 			
 			if(!flag)
 				System.out.println(DATE_INVALIDE);
+			
+			else if(!flag1)
+				System.out.println(DATE_INVALIDE);
+
 		
 			
-		}while(!flag);
+		}while(!flag || !flag1);
 	
 		motsCle = TP3Utils.validerLngChaine(MSG_SOL_MOTS_CLE,MSG_ERR_MOTS_CLE,2,50);
 		motsCles = motsCle.split("\\s+") ; 
 		
 		
-		localisation = TP3Utils.validerLngChaine("Entrez la localisation de l'objet perdu consigne : \r\n",MSG_ERR_MOTS_CLE,5,50);
+		localisation = TP3Utils.validerLngChaine("Entrez la localisation de l'objet perdu consigne : ",MSG_ERR_MOTS_CLE,5,50);
 		
 		objet = new ObjetPerdu(categorie,date,localisation);
 		
@@ -534,15 +540,13 @@ public class GestionObjetsPerdus {
 			objetsPerdus = ObjetPerdu.agrandirTableau(objetsPerdus,4);
 		
 		
-		else {
 			objetsPerdus[ObjetPerdu.getSequenceId() -2] = objet;
 			objetsPerdus[ObjetPerdu.getSequenceId() -2].motsCles = ObjetPerdu.agrandirTableau(objetsPerdus[ObjetPerdu.getSequenceId() -2].motsCles,motsCles.length); 
 			for(int i=0 ; i<motsCles.length ; i++)
-				objetsPerdus[ObjetPerdu.getSequenceId() -2].ajouterMotCle(motsCles[i]); //Msg d erreur ?
+				objetsPerdus[ObjetPerdu.getSequenceId() -2].ajouterMotCle(motsCles[i]);
 			
-		}
 		
-
+			return objetsPerdus;
 	}
 	
 	
@@ -551,9 +555,9 @@ public class GestionObjetsPerdus {
 	}
 	
 	public static void main(String[] args) {
+		Date date = new Date();
         String choix;
-        ObjetPerdu[] objetsPerdus = null; //= new ObjetPerdu[10];
-        //objetsPerdus = TP3Utils.recupererDonnees();
+        ObjetPerdu[] objetsPerdus = TP3Utils.recupererDonnees();
 
         do {
             menu();
@@ -563,8 +567,7 @@ public class GestionObjetsPerdus {
 
             switch (choix) {
                 case "1":
-                	//consignerObjet(date,objetsPerdus);
-                    objetsPerdus = TP3Utils.recupererDonnees();
+                	objetsPerdus = consignerObjet(date,objetsPerdus);
                     break;
                     
                 case "2":
@@ -601,7 +604,7 @@ public class GestionObjetsPerdus {
                     break;
                 case "7":
                 	TP3Utils.sauvegarder(objetsPerdus);
-                	System.out.print("AUREVOIR !");
+                	System.out.print(AUREVOIR);
                     break;
                     
                     
