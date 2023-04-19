@@ -4,13 +4,15 @@ public class ObjetPerdu {
 	final static int CAT_BIJOU = 0, CAT_VETEMENT = 1, CAT_ARGENT_PORTEFEUILLE = 2,CAT_CLE  = 3, CAT_AUTRE = 4; 
 	final static String[] CATEGORIES = {"bijou", "vetement", "argent / portefeuille", "cle(s)", "autre"} ;
 	
-	static int sequenceId = 1; 
+	private static int sequenceId = 1; 
 	
-	int id, categorie, nbrElem=0;
+
+	public int id, categorie, nbrElem=0;
 	
-	Date date = new Date();
+	private Date date = new Date();
 	
-	String localisation, valeurNonSign = "-1";
+	private String localisation;
+	String valeurNonSign = "-1";
 	
 	String[] motsCles;
 	
@@ -45,6 +47,17 @@ public class ObjetPerdu {
 		 return tab2;
 	 }
 	
+	public static int[] agrandirTableau(int[] tab, int nbrCasesDePlus) {
+		 //creer un nouveau tableau plus grand
+		int [] tab2 = new int [tab.length + nbrCasesDePlus];
+
+		 //copier les éléments de tab dans tab2
+		 for (int i = 0 ; i < tab.length ; i++) {
+		 tab2[i] = tab[i];
+		 }
+		 return tab2;
+	 }
+	
 	
 	public static String[] diminuerTableau(String[] tab, int nbrCasesDeMoins) {
 			 //creer un nouveau tableau plus grand
@@ -57,20 +70,27 @@ public class ObjetPerdu {
 				 
 				 tab2[j] = tab[i];
 			 }
+			 
 			 return tab2;
 		 }
 	
-	public static ObjetPerdu[] diminuerTableau(ObjetPerdu[] tab, int nbrCasesDeMoins) {
+	public static ObjetPerdu[] diminuerTableau(ObjetPerdu[] tab, int nbrCasesDeMoins,int m) {
 			 //creer un nouveau tableau plus grand
 		ObjetPerdu [] tab2 = new ObjetPerdu [tab.length - nbrCasesDeMoins];
+		int j=0;
 
+		tab[m] = null;
 			 //copier les éléments de tab dans tab2
-			 for (int i = 0, j = 0 ; i < tab.length ; j++,i++) {
-				 if(tab[i].equals("$"))
+			 for (int i = 0; i < tab.length ;i++) {
+				 if(tab[i] == null)
 				 	i++;
 				 
 				 tab2[j] = tab[i];
+				 j++;
 			 }
+			 
+			 System.out.println("C'est bon ");
+
 			 return tab2;
 		 }
 	
@@ -124,10 +144,8 @@ public class ObjetPerdu {
 		Boolean flag = true;
 		
 		if(motCle != null && motCle != "") {
-			for(int i=0 ; i<motsCles.length-1 ; i++) {
-				if(motCle.equalsIgnoreCase(motsCles[i])) {
-					flag = false;
-				}
+			if(estAssocieACeMotCle(motCle)) {
+				flag = false;
 			}
 			
 			if(flag) {
@@ -160,17 +178,23 @@ public class ObjetPerdu {
 	}
 	
 	public boolean supprimerMotCle(String motCle) {
+		boolean flag = false;
 		
-		for(int i = 0; i < motsCles.length ; i++) {
-			if(motCle.equalsIgnoreCase(motsCles[i])) {
-				motsCles[i] = "$"; 
-				motsCles = diminuerTableau(motsCles,1);
-				nbrElem--;
-				return true;
+		if(estAssocieACeMotCle(motCle)) {
+			for(int i = 0; i < motsCles.length ; i++) {
+				if(motCle.equalsIgnoreCase(motsCles[i])) {
+					motsCles[i] = "$"; 
+					motsCles = diminuerTableau(motsCles,1);
+					nbrElem--;
+					flag = true;
+				}
 			}
 		}
 		
-		return false;
+		else 
+			flag = false;
+		
+		return flag;
 	}
 	
 	
@@ -208,7 +232,6 @@ public class ObjetPerdu {
 	}
 
 	public static void setSequenceId(int i) {
-		// TODO Auto-generated method stub
 		sequenceId = i;
 		
 	}
