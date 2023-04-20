@@ -1,23 +1,73 @@
+/**
+ *
+ *
+ * @author Zakariae Bouargan
+ * Code Permanent: BOUZ90340206
+ * Courriel: fg591955@uqam.ca
+ * Cours : INF1120
+ * @version 20/04/2023
+ */
+
+
 
 public class GestionObjetsPerdus {
 	final static String AUREVOIR = "AUREVOIR !", ENTREE = "Appuyez sur <ENTREE> pour revenir au menu... ", RECHERCHE_MOTCLE= "------------------------\r\nRECHERCHER PAR MOTS CLES\r\n------------------------", DATE_INVALIDE = "ERREUR, date invalide! RECOMMENCEZ..." ,MENU = "=========================\r\nGESTION DES OBJETS PERDUS\r\n=========================\r\n\r\n\r\n----\r\nMENU\r\n----\r\n1. Consigner un objet perdu\r\n2. Rendre un objet reclame\r\n3. Rechercher un objet par mots cles\r\n4. Rechercher un objet par date(s)\r\n5. Rechercher un objet par categorie\r\n6. Afficher tous les objets consignes\r\n7. Quitter",  RESULAT_RECHERCHE = "RESULTAT(S) DE LA RECHERCHE : ", RECHERCHE_DATE = "----------------------\r\nRECHERCHER PAR DATE(S)\r\n----------------------", CHOIX = "Entrez votre choix : ", CATEGORIE = "CATEGORIES :\r\n1. bijou\r\n2. vetement\r\n3. argent / portefeuille\r\n4. cle(s)\r\n5. autre" ,ERR_REP_D_P = "ERREUR, entrez le caracere D ou P! RECOMMENCEZ..." ,DATE_PERIODE = "Specifier une (d)ate ou une (p)eriode : " ,OBJET_NON_TROUVE = "** AUCUN OBJET TROUVE **", ERREUR_MENU = "ERREUR, vous devez entrer un choix entre 1 et 7! RECOMMENCEZ..." ,REMISE_SUCCES = "** LA REMISE DE L'OBJET PERDU A ETE EFFECTUEE AVEC SUCCES **",ERR_POSITIF = "ERREUR, entrez un entier strictement positif! RECOMMENCEZ...", MSG_SOL_MOTS_CLE = "Entrez les mots-cles decrivant l'objet a consigner : " , MSG_ERR_MOTS_CLE = "ERREUR, la chaine doit contenir entre 2 et 50 caracteres! RECOMMENCEZ...",RECHERCHE_CATEGORIE = "------------------------\r\nRECHERCHER PAR CATEGORIE\r\n------------------------" ,MSG_ERR_MOTS_LOCALISATION = "ERREUR, la chaine doit contenir entre 5 et 50 caracteres! RECOMMENCEZ...",ANNULATION_REMISE = "** LA REMISE DE L'OBJET PERDU A ETE ANNULEE **", ERREUR_MENU_CATEGORIE = "ERREUR, vous devez entrer un choix entre 1 et 5! RECOMMENCEZ...", MSG_TROUVER = "Voulez-vous vraiment rendre cet objet perdu (oui / non) : ", ERR_REP = "ERREUR, vous devez entrer OUI ou NON! RECOMMENCEZ...",MSG_PAS_DOBJET = "** AUCUN OBJET PERDU N'EST CONSIGNE **",MSG_SOL_MOTS_CLE_RECHERCHE = "Mot(s) cle(s) recherches : " ,MSG_PAS_TROUVER = "** L'OBJET PERDU AYANT CET ID N'EST PAS CONSIGNE **";
 	
+	
+	/**
+
+	Cette méthode vérifie si un tableau de chaînes de caractères contient un autre tableau de chaînes de caractères.
+	@param tableau le tableau de chaînes de caractères dans lequel chercher
+	@param sousTableau le tableau de chaînes de caractères à chercher
+	@return true si le sous-tableau est contenu dans le tableau, false sinon
+	*/
 	public static boolean containsArray(String[] tableau, String[] sousTableau) {
-	    for (int i = 0; i <= tableau.length - sousTableau.length; i++) {
+	    // Parcours le tableau principal jusqu'à la dernière position possible pour un sous-tableau
+	    int i = 0;
+	    while (i <= tableau.length - sousTableau.length) {
+	        // Initialise un flag pour vérifier si tous les éléments du sous-tableau sont présents
 	        boolean found = true;
-	        for (int j = 0; j < sousTableau.length; j++) {
+	        
+	        // Parcours les éléments du sous-tableau
+	        int j = 0;
+	        while (j < sousTableau.length) {
+	            // Vérifie si l'élément actuel du sous-tableau est présent dans le tableau principal (en ignorant la casse)
 	            if (!tableau[i+j].equalsIgnoreCase(sousTableau[j])) {
+	                // Si l'élément n'est pas présent, on passe le flag à false et on sort de la boucle
 	                found = false;
-	                break;
+	                j++;
+	            } else {
+	                // Sinon, on continue la vérification avec l'élément suivant du sous-tableau
+	                j++;
 	            }
 	        }
+	        
+	        // Si tous les éléments du sous-tableau ont été trouvés, on retourne true
 	        if (found) {
 	            return true;
 	        }
+	        
+	        // Si on n'a pas trouvé le sous-tableau, on avance d'une position dans le tableau principal
+	        i++;
 	    }
+	    
+	    // Si on n'a pas trouvé le sous-tableau, on retourne false
 	    return false;
 	}
+
+
 	
+	
+	/**
+
+	Cette méthode permet de rechercher les objets perdus en fonction de leur catégorie.
+
+	Elle affiche les informations de chaque objet trouvé et affiche un message d'erreur si aucun objet
+
+	correspondant à la catégorie spécifiée n'est trouvé.
+
+	@param objetsPerdus le tableau d'objets perdus à parcourir pour effectuer la recherche
+	*/
 	
 	public static void rechercherObjetCategorie(ObjetPerdu[] objetsPerdus) {
 		String choix;
@@ -26,7 +76,8 @@ public class GestionObjetsPerdus {
 		
 		System.out.println(RECHERCHE_CATEGORIE);
 		
-		do {
+		//Boucle permettant de valider le choix de catégorie entré par l'utilisateur
+		do { 
 			System.out.println(CATEGORIE);
 			
 			System.out.print(CHOIX);
@@ -34,7 +85,7 @@ public class GestionObjetsPerdus {
 
 	            switch (choix) {
 	                case "1":
-	                	categorie = ObjetPerdu.CAT_BIJOU ;
+	                	categorie = ObjetPerdu.CAT_BIJOU;
 	                    break;
 
 	                case "2":
@@ -61,6 +112,7 @@ public class GestionObjetsPerdus {
 
 		System.out.println(RESULAT_RECHERCHE);
 		
+		//Boucle permettant de parcourir le tableau d'objets perdus et d'afficher les informations des objets
 		while(i < ObjetPerdu.getSequenceId() - 1) {
 			if(objetsPerdus[i].getCategorie() == categorie) {
 				flag = true;
@@ -74,12 +126,24 @@ public class GestionObjetsPerdus {
 			i++;
 		}
 		
+		
+		//Affichage d'un message d'erreur si aucun objet correspondant à la catégorie spécifiée n'est trouvé
 		if(!flag) 
 			System.out.println(OBJET_NON_TROUVE);
 		
-		return ;
 	}
 	
+	
+	/**
+
+	Cette méthode permet de rechercher les objets perdus en fonction de leur date.
+
+	Elle affiche les informations de chaque objet trouvé et affiche un message d'erreur si aucun objet
+
+	correspondant à la catégorie spécifiée n'est trouvé.
+
+	@param objetsPerdus le tableau d'objets perdus à parcourir pour effectuer la recherche
+	*/
 	public static void rechercherObjetDate(ObjetPerdu[] objetsPerdus) {
 		int jour,mois,annee,r=0,j=0, i=0,jourf,moisf,anneef;
 		int[] id = new int[0];
@@ -414,6 +478,12 @@ public class GestionObjetsPerdus {
 		
 	}
 	
+	/**
+
+	Affiche tous les objets perdus dans le tableau d'objets passés en paramètre.
+
+	@param objetsPerdus le tableau d'objets perdus à afficher
+	*/
 	public static void affichage(ObjetPerdu[] objetsPerdus) {
 		int i=0; 
 		System.out.println("----------------------------------\r\n"
@@ -556,21 +626,20 @@ public class GestionObjetsPerdus {
 	
 	public static void main(String[] args) {
 		Date date = new Date();
-        String choix;
+        int choix;
         ObjetPerdu[] objetsPerdus = TP3Utils.recupererDonnees();
 
         do {
             menu();
-            System.out.print("Entrez votre choix : ");
             
-            choix = Clavier.lireString();
+            choix = TP3Utils.validerEntier(CHOIX, ERREUR_MENU, 1, 7);
 
             switch (choix) {
-                case "1":
+                case 1:
                 	objetsPerdus = consignerObjet(date,objetsPerdus);
                     break;
                     
-                case "2":
+                case 2:
                 	if(ObjetPerdu.getSequenceId() > 0)
                 		objetsPerdus = reclamation(objetsPerdus);
                 	else
@@ -578,20 +647,20 @@ public class GestionObjetsPerdus {
                 	
                     break;
 
-                case "3":
+                case 3:
                 	if(ObjetPerdu.getSequenceId() > 0)
                 		rechercherObjetMots(objetsPerdus);
                 	else
                 		System.out.println(MSG_PAS_DOBJET);
                     break;
 
-                case "4":
+                case 4:
                 	if(ObjetPerdu.getSequenceId() > 0)
                 		rechercherObjetDate(objetsPerdus);
                 	else
                 		System.out.println(MSG_PAS_DOBJET);
                     break;
-                case "5":
+                case 5:
                 	if(ObjetPerdu.getSequenceId() > 0)
                 		rechercherObjetCategorie(objetsPerdus);
                 		
@@ -599,19 +668,18 @@ public class GestionObjetsPerdus {
                     	System.out.println(MSG_PAS_DOBJET);
                 		
                     break;
-                case "6":
+                case 6:
                 	affichage(objetsPerdus);
                     break;
-                case "7":
+                case 7:
                 	TP3Utils.sauvegarder(objetsPerdus);
                 	System.out.print(AUREVOIR);
                     break;
                     
                     
-                default:
-                    System.out.println(ERREUR_MENU);
+               
             }
 
-            } while (!choix.equals("7"));
+            } while (choix!= 7);
 	}
 	}
